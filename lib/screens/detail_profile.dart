@@ -1,0 +1,124 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/profile.dart';
+import 'package:flutter_application_1/screens/edit_profile.dart';
+
+class DetailProfile extends StatefulWidget {
+  const DetailProfile({super.key, required this.profile});
+
+  final Profile profile;
+
+  @override
+  State<DetailProfile> createState() => _DetailProfileState();
+}
+
+class _DetailProfileState extends State<DetailProfile> {
+  late String nama;
+  bool isChange = true;
+  @override
+  void initState() {
+    super.initState();
+    nama = widget.profile.name;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Detail Profile")),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 300,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/wp.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 110,
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundImage: Image.network(
+                        "https://icon-icons.com/download-file?file=https%3A%2F%2Fimages.icon-icons.com%2F2620%2FPNG%2F512%2Famong_us_player_red_icon_156942.png&id=156942&pack_or_individual=pack",
+                      ).image,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+
+            Text(
+              widget.profile.name,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              widget.profile.bio,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100),
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,",
+                style: TextStyle(fontSize: 16),
+                textAlign: TextAlign.justify,
+              ),
+            ),
+            SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: () {
+                isChange = !isChange;
+                if (isChange) {
+                  setState(() {
+                    nama = "Astawa";
+                  });
+                } else {
+                  setState(() {
+                    nama = "I Wayan Astawa Putra";
+                  });
+                }
+              },
+              child: Text("Change name"),
+            ),
+            SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Back to Home"),
+            ),
+            SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () async {
+                final Profile? updateProfile = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfile(profile: widget.profile),
+                  ),
+                );
+                if (updateProfile != null) {
+                  setState(() {
+                    widget.profile.name = updateProfile.name;
+                    widget.profile.bio = updateProfile.bio;
+                  });
+
+                  Navigator.pop(context, widget.profile);
+                }
+              },
+              child: Text("Edit Profile"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
