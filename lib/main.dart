@@ -113,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             id: 0,
                             name: namaController.text,
                             bio: "Developer",
+                            desc28: "Awowkwkwkwk",
                           ),
                         ),
                       ),

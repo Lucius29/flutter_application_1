@@ -22,6 +22,7 @@ class _ListProfileState extends State<ListProfile> {
           id: counter,
           name: "Astawa ${counter}",
           bio: "Junior Developer",
+          desc28: "Awowkwkwkwkwk",
         ),
       );
     });
