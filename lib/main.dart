@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/provider/profile_provider.dart';
 import 'package:flutter_application_1/screens/detail_profile.dart';
 import 'package:flutter_application_1/screens/list_profile.dart';
 import 'package:flutter_application_1/models/profile.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ProfileProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Provider Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      // home: MyHomePage(title: 'Flutter Demo Home Page'),
-      home: ListProfile(),
-      // home: DetailProfile(
-      //   profile: Profile(id: 1, name: "Astawa", bio: "Junior Dev"),
-      // ),
+      home: const ListProfile(),
     );
   }
 }
@@ -108,14 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetailProfile(
-                          profile: Profile(
-                            id: 0,
-                            name: namaController.text,
-                            bio: "Developer",
-                            desc28: "Awowkwkwkwk",
-                          ),
-                        ),
+                        builder: (context) => DetailProfile(profileId: 1),
                       ),
                     );
                   },
